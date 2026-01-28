@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 5306212240848604467}
   - component: {fileID: 1546100629376643534}
   - component: {fileID: 7164857770538142885}
+  - component: {fileID: 6380033456273289877}
   m_Layer: 5
-  m_Name: DialoguePanel
+  m_Name: DialogPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,12 +57,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 476995306615787917}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f33a921c6d15e94abd98d804531a4e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 611439635dfe0434bbf681c648fa00bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speakerImage: {fileID: 3818502314238032156}
   speakerText: {fileID: 3133887762965770321}
   contentText: {fileID: 8565854869225180865}
+  nextButton: {fileID: 9106136005248277226}
+--- !u!114 &6380033456273289877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476995306615787917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7a595d2fbf12034984a26efd5d8b95e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1031732680419483167
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,19 +331,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1017365757379534781}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7164857770538142885}
-        m_TargetAssemblyTypeName: DialogPanel, Assembly-CSharp
-        m_MethodName: NextDialogue
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
 --- !u!1 &3500075092660346712
 GameObject:
   m_ObjectHideFlags: 0

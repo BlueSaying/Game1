@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
                     canMoveForward = false;
                 }
             }
-        });
+        });UIManager.Instance.OpenPanel(PanelName.DialogPanel);
     }
 
     void Update()

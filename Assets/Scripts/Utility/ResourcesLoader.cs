@@ -26,6 +26,10 @@ public class ResourcesLoader : Singleton<ResourcesLoader>
     private Dictionary<string, GameObject> panelDic = new Dictionary<string, GameObject>();
     private static readonly string panelPath = "Prefabs/Panels/";
 
+
+    // Dialog
+    private static readonly string dialoguePath = "Dialogues/";
+
     // 音效
     private static readonly string audioPath = "Audios/";
 
@@ -72,13 +76,18 @@ public class ResourcesLoader : Singleton<ResourcesLoader>
         return newEffect;
     }
 
-    public GameObject LoadPanel(string sceneName, string panelName)
+    public GameObject LoadPanel(string panelName)
     {
-        if (panelDic.ContainsKey(sceneName + panelName)) return panelDic[sceneName + panelName];
+        if (panelDic.ContainsKey(panelName)) return panelDic[panelName];
 
-        GameObject newPanel = Resources.LoadAll<GameObject>(panelPath + sceneName).Where(x => x.name == panelName).ToArray()[0];
-        panelDic.Add(sceneName + panelName, newPanel);
+        GameObject newPanel = Resources.LoadAll<GameObject>(panelPath + panelName).Where(x => x.name == panelName).ToArray()[0];
+        panelDic.Add(panelName, newPanel);
         return newPanel;
+    }
+
+    public TextAsset LoadDialogue(string dialogueName)
+    {
+        return Resources.LoadAll<TextAsset>(dialoguePath + dialogueName).Where(x => x.name == dialogueName).ToArray()[0];
     }
 
     public AudioClip LoadAudioClip(string audioType, string audioName)
