@@ -3,6 +3,7 @@
 public enum PanelName
 {
     DialogPanel,
+    MainMenu,
 }
 
 /// <summary>

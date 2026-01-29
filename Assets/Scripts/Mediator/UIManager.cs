@@ -65,7 +65,7 @@ public class UIManager : Singleton<UIManager>
         }
 
         controller.OpenPanel(name);
-        Debug.Log(name);
+
         openedPanels.Add(name, controller);
 
         return controller;
@@ -88,5 +88,40 @@ public class UIManager : Singleton<UIManager>
         openedPanels.Remove(panelName);
         controller.ClosePanel();
         return true;
+    }
+
+    /// <summary>
+    /// 将UI面板上移一层
+    /// </summary>
+    public void MovePanelUp(UIController controller)
+    {
+        int siblingCount = controller.transform.parent.childCount;
+        int siblingIndex = controller.transform.GetSiblingIndex();
+        if (siblingIndex < siblingCount - 1) controller.transform.SetSiblingIndex(siblingIndex + 1);
+    }
+
+    /// <summary>
+    /// 将UI面板下移一层
+    /// </summary>
+    public void MovePanelDown(UIController controller)
+    {
+        int siblingIndex = controller.transform.GetSiblingIndex();
+        if (siblingIndex > 0) controller.transform.SetSiblingIndex(siblingIndex - 1);
+    }
+
+    /// <summary>
+    /// 将UI面板移动到最前面
+    /// </summary>
+    public void MovePanelToFront(UIController controller)
+    {
+        controller.transform.SetAsLastSibling();
+    }
+
+    /// <summary>
+    /// 将UI面板移动到最后面
+    /// </summary>
+    public void MovePanelToBack(UIController controller)
+    {
+        controller.transform.SetAsFirstSibling();
     }
 }
