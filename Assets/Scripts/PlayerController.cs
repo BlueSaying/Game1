@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 专注于非战斗状态下的Player逻辑
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5.0f;
+    public float moveSpeed = 10.0f;
     public float rotSpeed = 1.0f;
 
     private Vector3 fallingVelocity;
@@ -11,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController characterController;
 
     // 能否继续前进
+    private bool canMove;
     private bool canMoveForward;
     private HashSet<GameObject> triggeringObj;
 
@@ -21,10 +23,9 @@ public class PlayerController : MonoBehaviour
 
         characterController = GetComponent<CharacterController>();
 
+        canMove = true;
         canMoveForward = true;
         triggeringObj = new HashSet<GameObject>();
-
-        // 注意：此处不得添加事件，应该在Start中添加
     }
 
     void Start()
@@ -50,7 +51,20 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Move();
+        if (canMove)
+        {
+            Move();
+        }
+    }
+
+    public void LockMove()
+    {
+        canMove = false;
+    }
+
+    public void UnlockMove()
+    {
+        canMove = true;
     }
 
     private void Move()
@@ -91,4 +105,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(motion * rotSpeed);
         }
     }
+
+    #region 事件集
+    #endregion
 }

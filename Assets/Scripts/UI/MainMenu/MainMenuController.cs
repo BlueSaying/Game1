@@ -1,12 +1,11 @@
 ﻿public class MainMenuController : UIController
 {
-    private MainMenuView view;
+    public MainMenuView view;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
-        view = GetComponent<MainMenuView>();
         view.newGameButton.onClick.AddListener(OnNewGameButtonClicked);
         view.loadButton.onClick.AddListener(OnLoadButtonClicked);
         view.continueButton.onClick.AddListener(OnContinueButtonClicked);

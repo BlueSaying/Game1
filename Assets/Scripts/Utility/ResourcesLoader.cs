@@ -2,6 +2,12 @@
 using System.Linq;
 using UnityEngine;
 
+public enum SpriteType
+{
+    DialogueSpeakers,
+    UnitIcon,
+}
+
 // 专门用来管理从Resources文件加载东西的类
 public class ResourcesLoader : Singleton<ResourcesLoader>
 {
@@ -95,7 +101,7 @@ public class ResourcesLoader : Singleton<ResourcesLoader>
         return Resources.LoadAll<AudioClip>(audioPath + audioType).Where(x => x.name == audioName).ToArray()[0];
     }
 
-    public Sprite LoadSprite(string spriteType, string spriteName)
+    public Sprite LoadSprite(SpriteType spriteType, string spriteName)
     {
         if (spriteDic.ContainsKey(spriteName)) return spriteDic[spriteName];
 

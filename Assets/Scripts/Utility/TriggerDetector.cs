@@ -71,6 +71,12 @@ public class TriggerDetector : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 不要在Awake中使用
+    /// </summary>
+    /// <param name="triggerEventType"></param>
+    /// <param name="targetTag"></param>
+    /// <param name="action"></param>
     public void AddTriggerListener(TriggerEventType triggerEventType, GameObject target, UnityAction<GameObject> action)
     {
         switch (triggerEventType)
@@ -108,6 +114,12 @@ public class TriggerDetector : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 不要在Awake中使用
+    /// </summary>
+    /// <param name="triggerEventType"></param>
+    /// <param name="targetTag"></param>
+    /// <param name="action"></param>
     public void AddTriggerListener(TriggerEventType triggerEventType, GameObjectTag targetTag, UnityAction<GameObject> action)
     {
         switch (triggerEventType)

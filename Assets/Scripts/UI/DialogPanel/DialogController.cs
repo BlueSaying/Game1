@@ -2,17 +2,16 @@
 
 public class DialogController : UIController
 {
-    private DialogView view;
+    public DialogView view;
     private DialogModel model;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
-        view = GetComponent<DialogView>();
         model = new DialogModel(DialogueName.Dialogue1);
 
-        view.nextButton.onClick.AddListener(OnNextButtonClicked);
+        view.AddListenerToNextButton(OnNextButtonClicked);
         model.OnNextDialog += view.NextDialog;
         model.OnEndDialog += EndDialog;
 

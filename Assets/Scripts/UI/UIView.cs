@@ -2,8 +2,25 @@
 
 public enum PanelName
 {
+    /// <summary>
+    /// 对话面板
+    /// </summary>
     DialogPanel,
+
+    /// <summary>
+    /// 主菜单
+    /// </summary>
     MainMenu,
+
+    /// <summary>
+    /// 开始战斗前，战斗详情界面
+    /// </summary>
+    EnemyInfoBeforeBattlePanel,
+
+    /// <summary>
+    /// 战斗界面
+    /// </summary>
+    BattlePanel,
 }
 
 /// <summary>

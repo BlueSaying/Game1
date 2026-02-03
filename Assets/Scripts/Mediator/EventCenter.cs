@@ -18,6 +18,11 @@ public enum EventType
     // 以下为非永久事件
 
     /// <summary>
+    /// 战斗开始
+    /// </summary>
+    OnBattleStart,
+
+    /// <summary>
     /// 战斗结束
     /// </summary>
     OnBattleFinish,
@@ -28,29 +33,9 @@ public enum EventType
     OnEnemyDie,
 
     /// <summary>
-    /// 房间生成完毕
-    /// </summary>
-    OnFinishRoomCreate,
-
-    /// <summary>
     /// 玩家死亡
     /// </summary>
     OnPlayerDie,
-
-    /// <summary>
-    /// 玩家复活
-    /// </summary>
-    OnPlayerRevive,
-
-    /// <summary>
-    /// 角色选择完毕
-    /// </summary>
-    OnSelectPlayerComplete,
-
-    /// <summary>
-    /// 皮肤选择完毕
-    /// </summary>
-    OnSelectSkinComplete,
 
     /// <summary>
     /// 更新战斗界面
@@ -60,10 +45,10 @@ public enum EventType
 
 public class EventCenter : Singleton<EventCenter>
 {
-    public class IEventInfo { }
+    public class BaseEventInfo { }
 
     // 无参事件
-    public class EventInfo : IEventInfo
+    public class EventInfo : BaseEventInfo
     {
         public UnityAction action;
 
@@ -74,7 +59,7 @@ public class EventCenter : Singleton<EventCenter>
     }
 
     // 1个参数事件
-    public class EventInfo<T> : IEventInfo
+    public class EventInfo<T> : BaseEventInfo
     {
         public UnityAction<T> action;
 
@@ -85,21 +70,21 @@ public class EventCenter : Singleton<EventCenter>
     }
 
     // 2个参数事件
-    //public class EventInfo<T, U> : IEventInfo
-    //{
-    //    public UnityAction<T, U> action;
-    //
-    //    public EventInfo(UnityAction<T, U> action,bool isPermanent):base(isPermanent)
-    //    {
-    //        this.action = action;
-    //    }
-    //}
+    public class EventInfo<T, U> : BaseEventInfo
+    {
+        public UnityAction<T, U> action;
 
-    public Dictionary<EventType, List<IEventInfo>> eventDic;
+        public EventInfo(UnityAction<T, U> action)
+        {
+            this.action = action;
+        }
+    }
+
+    public Dictionary<EventType, List<BaseEventInfo>> eventDic;
 
     private EventCenter()
     {
-        eventDic = new Dictionary<EventType, List<IEventInfo>>();
+        eventDic = new Dictionary<EventType, List<BaseEventInfo>>();
     }
 
     private bool isPermanentEvent(EventType eventType)
@@ -111,7 +96,7 @@ public class EventCenter : Singleton<EventCenter>
     {
         if (!eventDic.TryGetValue(type, out var infoList))
         {
-            infoList = new List<IEventInfo>();
+            infoList = new List<BaseEventInfo>();
             eventDic.Add(type, infoList);
         }
 
@@ -131,10 +116,10 @@ public class EventCenter : Singleton<EventCenter>
     {
         if (!eventDic.TryGetValue(type, out var infoList))
         {
-            infoList = new List<IEventInfo>();
+            infoList = new List<BaseEventInfo>();
             eventDic.Add(type, infoList);
         }
-        
+
         foreach (var info in infoList)
         {
             if (info is EventInfo<T>)
@@ -147,11 +132,31 @@ public class EventCenter : Singleton<EventCenter>
         infoList.Add(new EventInfo<T>(action));
     }
 
+    public void RegisterEvent<T, U>(EventType type, UnityAction<T, U> action)
+    {
+        if (!eventDic.TryGetValue(type, out var infoList))
+        {
+            infoList = new List<BaseEventInfo>();
+            eventDic.Add(type, infoList);
+        }
+
+        foreach (var info in infoList)
+        {
+            if (info is EventInfo<T, U>)
+            {
+                (info as EventInfo<T, U>).action += action;
+                return;
+            }
+        }
+
+        infoList.Add(new EventInfo<T, U>(action));
+    }
+
     public void NotifyEvent(EventType type)
     {
         if (!eventDic.ContainsKey(type)) return;
 
-        foreach (IEventInfo info in eventDic[type])
+        foreach (BaseEventInfo info in eventDic[type])
         {
             if (info is EventInfo)
             {
@@ -164,11 +169,24 @@ public class EventCenter : Singleton<EventCenter>
     {
         if (!eventDic.ContainsKey(type)) return;
 
-        foreach (IEventInfo info in eventDic[type])
+        foreach (BaseEventInfo info in eventDic[type])
         {
             if (info is EventInfo<T>)
             {
                 (info as EventInfo<T>).action.Invoke(param);
+            }
+        }
+    }
+
+    public void NotifyEvent<T, U>(EventType type, T param1, U param2)
+    {
+        if (!eventDic.ContainsKey(type)) return;
+
+        foreach (BaseEventInfo info in eventDic[type])
+        {
+            if (info is EventInfo<T, U>)
+            {
+                (info as EventInfo<T, U>).action.Invoke(param1, param2);
             }
         }
     }
@@ -193,6 +211,19 @@ public class EventCenter : Singleton<EventCenter>
         foreach (var info in eventDic[type])
         {
             if (info is EventInfo<T> eventInfo)
+            {
+                eventInfo.action -= action;
+            }
+        }
+    }
+
+    public void RemoveEvent<T, U>(EventType type, UnityAction<T, U> action)
+    {
+        if (!eventDic.TryGetValue(type, out var infoList)) return;
+
+        foreach (var info in eventDic[type])
+        {
+            if (info is EventInfo<T, U> eventInfo)
             {
                 eventInfo.action -= action;
             }

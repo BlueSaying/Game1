@@ -20,7 +20,7 @@ public enum SceneName
     Scene1,
 }
 
-public class SceneLoader : MonoBehaviour
+public class SceneLoader : MonoBehaviourSingleton<SceneLoader>
 {
     bool isSceneLoading = false;
 
@@ -37,12 +37,9 @@ public class SceneLoader : MonoBehaviour
 
     public Image sceneLoadAnimatorImage;
 
-    private static SceneLoader _instance;
-    public static SceneLoader Instance { get { return _instance; } }
-
-    void Awake()
+    protected override void Awake()
     {
-        _instance = this;
+        base.Awake();
 
         DontDestroyOnLoad(gameObject);
         foreach (var obj in dontDestroyOnLoadObjs)
@@ -71,6 +68,8 @@ public class SceneLoader : MonoBehaviour
             // 仅触发一次
             OnSceneStartChange?.Invoke();
             OnSceneStartChange = null;
+            // 永久触发
+            EventCenter.Instance.NotifyEvent(EventType.OnSceneSwitchStart);
 
             AsyncOperation op = SceneManager.LoadSceneAsync(sceneName.ToString());
             op.completed += (AsyncOperation op) =>
@@ -80,6 +79,8 @@ public class SceneLoader : MonoBehaviour
                 // 仅调用一次
                 OnSceneFinishChanage?.Invoke();
                 OnSceneFinishChanage = null;
+                // 永久触发
+                EventCenter.Instance.NotifyEvent(EventType.OnSceneSwitchComplete);
 
                 sceneLoadAnimatorImage.transform.SetAsLastSibling();
                 sceneLoadAnimatorImage

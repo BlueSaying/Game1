@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public enum DialogueName
@@ -33,5 +34,10 @@ public class DialogView : UIView
         speakerText.text = speaker;
         contentText.text = content;
         speakerImage.sprite = image;
+    }
+
+    public void AddListenerToNextButton(UnityAction action)
+    {
+        nextButton.onClick.AddListener(action);
     }
 }

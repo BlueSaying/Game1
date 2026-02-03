@@ -71,7 +71,7 @@ public class DialogModel
             OnEndDialog?.Invoke();
             return;
         }
-
+        
         string speaker;
         string content;
         Sprite image;
@@ -87,7 +87,7 @@ public class DialogModel
         content = contents[targetRow];
         if (!speakerSprites.ContainsKey(speaker))
         {
-            Sprite sprite = Resources.Load<Sprite>("Sprites/DialogueSpeakers/" + speaker);
+            Sprite sprite = ResourcesLoader.Instance.LoadSprite(SpriteType.DialogueSpeakers,speaker);//Resources.Load<Sprite>("Sprites/DialogueSpeakers/" + speaker);
             if (sprite != null)
             {
                 speakerSprites.Add(speaker, sprite);

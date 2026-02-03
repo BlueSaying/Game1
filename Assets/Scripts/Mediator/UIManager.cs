@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
@@ -29,46 +30,56 @@ public class UIManager : Singleton<UIManager>
     }
 
     // 检测UI界面是否被打开
-    public bool IsPanelOpened(string panelname)
+    public bool IsPanelOpened(string panelName)
     {
-        return openedPanels.ContainsKey(panelname);
+        return openedPanels.ContainsKey(panelName);
+    }
+    public bool IsPanelOpened(PanelName panelName)
+    {
+        return IsPanelOpened(panelName.ToString());
     }
 
     // 获取界面
-    public UIController GetPanel(string panelname)
+    public UIController GetPanel(string panelName)
     {
-        if (!IsPanelOpened(panelname)) return null;
+        if (!IsPanelOpened(panelName)) return null;
 
-        return openedPanels[panelname];
+        return openedPanels[panelName];
+    }
+    public UIController GetPanel(PanelName panelName)
+    {
+        return GetPanel(panelName.ToString());
     }
 
     /// <summary>
     /// 打开UI界面
     /// </summary>
     /// <returns>打开的界面的Base_Panel</returns>
-    public UIController OpenPanel(PanelName panelName)
+    public UIController OpenPanel(string panelName)
     {
-        string name = panelName.ToString();
-
         //检查是否已经打开
-        if (IsPanelOpened(name))
+        if (IsPanelOpened(panelName))
         {
-            Debug.Log("界面已打开" + name);
+            Debug.Log("界面已打开" + panelName);
             return null;
         }
 
-        GameObject panelPrefab = ResourcesLoader.Instance.LoadPanel(name);
+        GameObject panelPrefab = ResourcesLoader.Instance.LoadPanel(panelName);
         UIController controller = GameObject.Instantiate(panelPrefab, UIRoot, false).GetComponent<UIController>();
         if (controller == null)
         {
             Debug.LogWarning(controller.ToString() + "未添加UIController的子类");
         }
 
-        controller.OpenPanel(name);
+        controller.OpenPanel(panelName);
 
-        openedPanels.Add(name, controller);
+        openedPanels.Add(panelName, controller);
 
         return controller;
+    }
+    public UIController OpenPanel(PanelName panelName)
+    {
+        return OpenPanel(panelName.ToString());
     }
 
     /// <summary>
@@ -88,6 +99,10 @@ public class UIManager : Singleton<UIManager>
         openedPanels.Remove(panelName);
         controller.ClosePanel();
         return true;
+    }
+    public bool ClosePanel(PanelName panelName)
+    {
+        return ClosePanel(panelName.ToString());
     }
 
     /// <summary>

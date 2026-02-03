@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7a595d2fbf12034984a26efd5d8b95e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  view: {fileID: 7164857770538142885}
 --- !u!1 &1031732680419483167
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,8 +144,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u5F20\u82E5\u865A"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 011621af335a99d47bd20884061f685b, type: 2}
-  m_sharedMaterial: {fileID: -1383347420449223526, guid: 011621af335a99d47bd20884061f685b,
+  m_fontAsset: {fileID: 11400000, guid: d035910381de8d546b71cfad9dcbbfb1, type: 2}
+  m_sharedMaterial: {fileID: -3446964886986617757, guid: d035910381de8d546b71cfad9dcbbfb1,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -344,7 +345,7 @@ GameObject:
   - component: {fileID: 8765759604730722073}
   - component: {fileID: 3944357109221914132}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -399,8 +400,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u7EE7\u7EED"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 011621af335a99d47bd20884061f685b, type: 2}
-  m_sharedMaterial: {fileID: -1383347420449223526, guid: 011621af335a99d47bd20884061f685b,
+  m_fontAsset: {fileID: 11400000, guid: d035910381de8d546b71cfad9dcbbfb1, type: 2}
+  m_sharedMaterial: {fileID: -3446964886986617757, guid: d035910381de8d546b71cfad9dcbbfb1,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -612,8 +613,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u6625\u6C5F\u6F6E\u6C34\u8FDE\u6D77\u5E73\uFF0C\u6D77\u4E0A\u660E\u6708\u5171\u6F6E\u751F\u3002\u6EDF\u6EDF\u968F\u6CE2\u5343\u4E07\u91CC\uFF0C\u4F55\u5904\u6625\u6C5F\u65E0\u6708\u660E\uFF01\u6C5F\u6D41\u5B9B\u8F6C\u7ED5\u82B3\u7538\uFF0C\u6708\u7167\u82B1\u6797\u7686\u4F3C\u9730\u3002\u7A7A\u91CC\u6D41\u971C\u4E0D\u89C9\u98DE\uFF0C\u6C40\u4E0A\u767D\u6C99\u770B\u4E0D\u89C1\u3002\u6C5F\u5929\u4E00\u8272\u65E0\u7EA4\u5C18\uFF0C\u768E\u768E\u7A7A\u4E2D\u5B64\u6708\u8F6E\u3002\u6C5F\u7554\u4F55\u4EBA\u521D\u89C1\u6708\uFF1F\u6C5F\u6708\u4F55\u5E74\u521D\u7167\u4EBA\uFF1F\u4EBA\u751F\u4EE3\u4EE3\u65E0\u7A77\u5DF2\uFF0C\u6C5F\u6708\u5E74\u5E74\u671B\u76F8\u4F3C\u3002"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 011621af335a99d47bd20884061f685b, type: 2}
-  m_sharedMaterial: {fileID: -1383347420449223526, guid: 011621af335a99d47bd20884061f685b,
+  m_fontAsset: {fileID: 11400000, guid: d035910381de8d546b71cfad9dcbbfb1, type: 2}
+  m_sharedMaterial: {fileID: -3446964886986617757, guid: d035910381de8d546b71cfad9dcbbfb1,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

@@ -15,7 +15,7 @@ public class MainMenuView : UIView
     protected override void DOClosePanel()
     {
         base.DOClosePanel();
-
+        
         DestroyPanel();
     }
 }
