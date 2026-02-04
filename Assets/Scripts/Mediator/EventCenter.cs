@@ -33,6 +33,11 @@ public enum EventType
     OnEnemyDie,
 
     /// <summary>
+    /// 当玩家数据改变
+    /// </summary>
+    OnPlayerInfoChanged,
+
+    /// <summary>
     /// 玩家死亡
     /// </summary>
     OnPlayerDie,

@@ -21,6 +21,11 @@ public enum PanelName
     /// 战斗界面
     /// </summary>
     BattlePanel,
+
+    /// <summary>
+    /// 背包界面
+    /// </summary>
+    PackagePanel,
 }
 
 /// <summary>

@@ -55,7 +55,7 @@ public class InfoCanvasController : MonoBehaviour
             slider.value = newHP;
         }
 
-        miniHPBar.Find("HealthText").GetComponent<TMP_Text>().text = newHP.ToString() + " / " + maxHP.ToString();
+        miniHPBar.Find("HPText").GetComponent<TMP_Text>().text = newHP.ToString() + " / " + maxHP.ToString();
     }
 
     private IEnumerator TransBar(Slider slider, int newValue)

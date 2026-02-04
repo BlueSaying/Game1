@@ -600,7 +600,7 @@ GameObject:
   - component: {fileID: 985911448830807117}
   - component: {fileID: 2450452250250061908}
   m_Layer: 5
-  m_Name: HealthText
+  m_Name: HPText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1304,7 +1304,7 @@ GameObject:
   - component: {fileID: 8703425115370482715}
   - component: {fileID: 4366303331517733254}
   m_Layer: 5
-  m_Name: ManaText
+  m_Name: MPText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1910,7 +1910,7 @@ GameObject:
   - component: {fileID: 4735272270198459797}
   - component: {fileID: 6913075652340627420}
   m_Layer: 5
-  m_Name: HealthBar
+  m_Name: HPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4983,7 +4983,7 @@ GameObject:
   - component: {fileID: 6663988711822968393}
   - component: {fileID: 7077343731757333998}
   m_Layer: 5
-  m_Name: ManaBar
+  m_Name: MPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

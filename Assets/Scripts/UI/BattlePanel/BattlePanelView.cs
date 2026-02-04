@@ -43,7 +43,7 @@ public class BattlePanelView : UIView
         slider.maxValue = maxHP;
         StartCoroutine(TransBar(slider, newHP));
 
-        healthBar.Find("HealthText").GetComponent<TMP_Text>().text = newHP.ToString() + " / " + maxHP.ToString();
+        healthBar.Find("HPText").GetComponent<TMP_Text>().text = newHP.ToString() + " / " + maxHP.ToString();
     }
 
     public void UpdateMPInfo(int newMP, int maxMP)
@@ -53,7 +53,7 @@ public class BattlePanelView : UIView
         slider.maxValue = maxMP;
         StartCoroutine(TransBar(slider, newMP));
 
-        manaBar.Find("ManaText").GetComponent<TMP_Text>().text = newMP.ToString() + " / " + maxMP.ToString();
+        manaBar.Find("MPText").GetComponent<TMP_Text>().text = newMP.ToString() + " / " + maxMP.ToString();
     }
 
     private IEnumerator TransBar(Slider slider, int newValue)
@@ -170,7 +170,7 @@ public class BattlePanelView : UIView
     {
         manaAttackButton.onClick.AddListener(action);
     }
-    public void AddListenerToskillButton(UnityAction action)
+    public void AddListenerToSkillButton(UnityAction action)
     {
         skillButton.onClick.AddListener(action);
     }

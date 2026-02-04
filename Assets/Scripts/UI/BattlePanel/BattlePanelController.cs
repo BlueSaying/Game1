@@ -12,7 +12,7 @@ public class BattlePanelController : UIController
 
         view.AddListenerToPhysicalAttackButton(OnPhysicalAttackButtonClicked);
         view.AddListenerToManaAttackButton(OnManaAttackButtonClicked);
-        view.AddListenerToskillButton(OnskillButtonClicked);
+        view.AddListenerToSkillButton(OnSkillButtonClicked);
         view.AddListenerToDefenceButton(OnDefenceButtonClicked);
         view.AddListenerToGiveUpButton(OnGiveUpButtonClicked);
 
@@ -21,10 +21,15 @@ public class BattlePanelController : UIController
         view.HidePhysicalAttackMenu();
         view.HideManaAttackMenu();
 
-        // Test
-        //view.UpdateHPInfo(25, 50);
-        //view.UpdateMPInfo(100, 100);
-        UpdatePlayerInfo(PlayerManager.Instance.PlayerModel);
+        UpdatePlayerInfo();
+
+        EventCenter.Instance.RegisterEvent(EventType.OnPlayerInfoChanged, UpdatePlayerInfo);
+    }
+
+    public override void ClosePanel()
+    {
+        base.ClosePanel();
+        EventCenter.Instance.RemoveEvent(EventType.OnPlayerInfoChanged, UpdatePlayerInfo);
     }
 
     public void UpdateBattleQueue(List<Unit> battleQueue)
@@ -40,34 +45,36 @@ public class BattlePanelController : UIController
         }
     }
 
-    public void UpdatePlayerInfo(PlayerModel playerModel)
+    public void UpdatePlayerInfo()
     {
-        view.UpdateHPInfo(playerModel.curHP, playerModel.maxHP);
-        view.UpdateMPInfo(playerModel.curMP, playerModel.maxMP);
+        PlayerModel model = PlayerManager.Instance.PlayerModel;
+
+        view.UpdateHPInfo(model.curHP, model.maxHP);
+        view.UpdateMPInfo(model.curMP, model.maxMP);
     }
 
     #region 事件集
-    public void OnPhysicalAttackButtonClicked()
+    private void OnPhysicalAttackButtonClicked()
     {
         view.ShowPhysicalAttackMenu();
         view.HidePrimaryMenu();
         view.UpdatePhysicalAttackMenu(PlayerManager.Instance.PlayerModel.physcialSkills);
     }
-    public void OnManaAttackButtonClicked()
+    private void OnManaAttackButtonClicked()
     {
         view.ShowManaAttackMenu();
         view.HidePrimaryMenu();
         view.UpdateManaAttackMenu(PlayerManager.Instance.PlayerModel.manaSkills);
     }
-    public void OnskillButtonClicked()
+    private void OnSkillButtonClicked()
     {
 
     }
-    public void OnDefenceButtonClicked()
+    private void OnDefenceButtonClicked()
     {
 
     }
-    public void OnGiveUpButtonClicked()
+    private void OnGiveUpButtonClicked()
     {
         CameraManager.Instance.SwitchToPlayerFollowCamera();
         PlayerManager.Instance.UnlockMove();

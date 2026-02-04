@@ -46,13 +46,13 @@ public class PlayerUnit : Unit
     {
         base.TakeDamage(skill, attcker);
 
-        (UIManager.Instance.GetPanel(PanelName.BattlePanel) as BattlePanelController).UpdatePlayerInfo(Model);
+        EventCenter.Instance.NotifyEvent(EventType.OnPlayerInfoChanged);
     }
 
     public override void ReleaseSkill(Skill skill, Unit target)
     {
         base.ReleaseSkill(skill, target);
 
-        (UIManager.Instance.GetPanel(PanelName.BattlePanel) as BattlePanelController).UpdatePlayerInfo(Model);
+        EventCenter.Instance.NotifyEvent(EventType.OnPlayerInfoChanged);
     }
 }

@@ -48,7 +48,7 @@ public class DialogModel
 
     private void LoadDialog(DialogueName dialogueName)
     {
-        TextAsset dialogueText = ResourcesLoader.Instance.LoadDialogue(dialogueName.ToString());
+        TextAsset dialogueText = DataLoader.LoadDialogue(DialogueName.Dialogue1);
         string[] rows = dialogueText.text.Split('\n');
 
         for (int i = 1; i < rows.Length; i++)
@@ -71,7 +71,7 @@ public class DialogModel
             OnEndDialog?.Invoke();
             return;
         }
-        
+
         string speaker;
         string content;
         Sprite image;
@@ -87,7 +87,7 @@ public class DialogModel
         content = contents[targetRow];
         if (!speakerSprites.ContainsKey(speaker))
         {
-            Sprite sprite = ResourcesLoader.Instance.LoadSprite(SpriteType.DialogueSpeakers,speaker);//Resources.Load<Sprite>("Sprites/DialogueSpeakers/" + speaker);
+            Sprite sprite = ResourcesLoader.Instance.LoadSprite(SpriteType.DialogueSpeakers, speaker);
             if (sprite != null)
             {
                 speakerSprites.Add(speaker, sprite);
