@@ -80,6 +80,8 @@ public class BattlePanelController : UIController
         PlayerManager.Instance.UnlockMove();
 
         UIManager.Instance.ClosePanel(this.name);
+
+        EventCenter.Instance.NotifyEvent(EventType.OnPlayerGiveUpBattle);
     }
     #endregion
 }

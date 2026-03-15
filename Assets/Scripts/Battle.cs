@@ -11,10 +11,15 @@ public class Battle : MonoBehaviour
     public CinemachineVirtualCamera enemyFocusCamera;
     public CinemachineVirtualCamera battleCamera;
 
-    public Transform playerPositioning;
+    public Transform playerPosition;
     public Transform enemies;
 
     public List<Unit> allUnits;
+
+    private bool canBattleEnter;
+    public float openTime;
+    private float openTimer;
+
     private List<float> remainingDistance;
     private List<float> remainingTime;
 
@@ -25,6 +30,11 @@ public class Battle : MonoBehaviour
     public List<Unit> BattleQueue { get; private set; }
 
     public int CurTurn { get; private set; }
+
+    private void Awake()
+    {
+        canBattleEnter = true;
+    }
 
     void Start()
     {
@@ -43,35 +53,40 @@ public class Battle : MonoBehaviour
     {
         if (isSelectingTarget)
         {
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                selectingTargetIndex = (selectingTargetIndex + 1) % allUnits.Count;
-                while (allUnits[selectingTargetIndex].IsDead)
-                {
-                    selectingTargetIndex = (selectingTargetIndex + 1) % allUnits.Count;
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                selectingTargetIndex = (selectingTargetIndex - 1 + allUnits.Count) % allUnits.Count;
-                while (allUnits[selectingTargetIndex].IsDead)
-                {
-                    selectingTargetIndex = (selectingTargetIndex + 1) % allUnits.Count;
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
-            {
-                BattleManager.Instance.ReleasePlayerSkill(selectedPlayerSkill, PlayerManager.Instance.PlayerUnit, allUnits[selectingTargetIndex]);
-                isSelectingTarget = false;
-            }
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-
-            }
+            HandleInput();
             UpdateSelectedArrow();
+        }
+
+        if (!canBattleEnter)
+        {
+            if (openTimer >= openTime)
+            {
+                openTimer = 0;
+
+                GetComponent<SphereCollider>().enabled = true;
+                canBattleEnter = true;
+                RefreshUnits();
+            }
+            else
+            {
+                openTimer += Time.deltaTime;
+            }
         }
     }
 
+    // 使Battle可以被玩家战斗
+    public void RefreshUnits()
+    {
+        foreach (Transform enemy in enemies)
+        {
+            // active enmey unit
+            enemy.gameObject.SetActive(true);
+
+            // refresh enemy unit data
+            enemy.GetComponent<EnemyUnit>().Revive();
+            enemy.GetComponent<EnemyUnit>().HideHPInfo();
+        }
+    }
     public void SelectTargetAfterSkillSelected(PlayerSkill playerSkill)
     {
         isSelectingTarget = true;
@@ -84,22 +99,9 @@ public class Battle : MonoBehaviour
         }
     }
 
-    private void UpdateSelectedArrow()
-    {
-        foreach (var unit in allUnits)
-        {
-            unit.infoCanvasController.HideSelectedArrow();
-        }
-
-        if (isSelectingTarget)
-        {
-            allUnits[selectingTargetIndex].infoCanvasController.ShowSelectedArrow();
-        }
-    }
-
     public void StartBattle()
     {
-        PlayerManager.Instance.SetPlayerTransform(playerPositioning);
+        PlayerManager.Instance.SetPlayerTransform(playerPosition);
         CameraManager.Instance.SwitchCamera(battleCamera);
 
         // 开始战斗后，将玩家和敌人加入units中
@@ -150,9 +152,28 @@ public class Battle : MonoBehaviour
         CalcBattleQueue();
     }
 
-    public void QuitBattle()
+    public void DefeatThenQuitBattle()
     {
-        gameObject.SetActive(false);
+        // refresh battle
+        GetComponent<SphereCollider>().enabled = true;
+        canBattleEnter = true;
+
+        // refresh unit
+        RefreshUnits();
+    }
+
+    public void VictoryThenQuitBattle()
+    {
+        GetComponent<SphereCollider>().enabled = false;
+        canBattleEnter = false;
+
+        foreach (var unit in allUnits)
+        {
+            if (unit is EnemyUnit)
+            {
+                unit.gameObject.SetActive(false);
+            }
+        }
     }
 
     private void CalcBattleQueue()
@@ -192,6 +213,48 @@ public class Battle : MonoBehaviour
         {
             remainingDistance.Add(tempRemainingDistance[i]);
             remainingTime.Add(tempRemainingDistance[i] / allUnits[i].Speed);
+        }
+    }
+
+    private void HandleInput()
+    {
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            selectingTargetIndex = (selectingTargetIndex + 1) % allUnits.Count;
+            while (allUnits[selectingTargetIndex].IsDead)
+            {
+                selectingTargetIndex = (selectingTargetIndex + 1) % allUnits.Count;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            selectingTargetIndex = (selectingTargetIndex - 1 + allUnits.Count) % allUnits.Count;
+            while (allUnits[selectingTargetIndex].IsDead)
+            {
+                selectingTargetIndex = (selectingTargetIndex + 1) % allUnits.Count;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+        {
+            BattleManager.Instance.ReleasePlayerSkill(selectedPlayerSkill, PlayerManager.Instance.PlayerUnit, allUnits[selectingTargetIndex]);
+            isSelectingTarget = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+
+        }
+    }
+
+    private void UpdateSelectedArrow()
+    {
+        foreach (var unit in allUnits)
+        {
+            unit.infoCanvasController.HideSelectedArrow();
+        }
+
+        if (isSelectingTarget)
+        {
+            allUnits[selectingTargetIndex].infoCanvasController.ShowSelectedArrow();
         }
     }
 

@@ -32,7 +32,7 @@ public class PackageManager : MonoBehaviourSingleton<PackageManager>
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             if (UIManager.Instance.IsPanelOpened(PanelName.PackagePanel))
             {

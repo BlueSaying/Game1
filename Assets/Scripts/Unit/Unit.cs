@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class UnitModel
 {
@@ -27,6 +28,17 @@ public class UnitModel
         this.speed = speed;
         this.name = name;
     }
+
+    public virtual void Die()
+    {
+        curHP = 0;
+    }
+
+    public virtual void Revive()
+    {
+        curHP = maxHP;
+        curMP = maxMP;
+    }
 }
 
 public abstract class Unit : MonoBehaviour
@@ -48,6 +60,8 @@ public abstract class Unit : MonoBehaviour
 
     public InfoCanvasController infoCanvasController;
 
+    public UnityAction HideHPInfo => infoCanvasController.HideHPInfo;
+
     // 收到攻击
     public virtual void TakeDamage(Skill skill, Unit attcker)
     {
@@ -55,13 +69,7 @@ public abstract class Unit : MonoBehaviour
         if (Model.curHP > Model.maxHP) Model.curHP = Model.maxHP;
         if (Model.curHP <= 0)
         {
-            Model.curHP = 0;
-            IsDead = true;
-            infoCanvasController.HideHPInfo();
-
-            // HACK
-            gameObject.SetActive(false);
-            Debug.Log(name + "Die!");
+            Die();
         }
 
         infoCanvasController.ShowDamageNum(skill.damage);
@@ -79,5 +87,19 @@ public abstract class Unit : MonoBehaviour
     public virtual void StartBattle()
     {
         IsDead = false;
+    }
+
+    public virtual void Die()
+    {
+        Debug.Log(name + "Die!");
+        Model.Die();
+        IsDead = true;
+    }
+
+    public void Revive()
+    {
+        IsDead = false;
+        gameObject.SetActive(true);
+        Model.Revive();
     }
 }

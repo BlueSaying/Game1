@@ -33,4 +33,14 @@ public class EnemyUnit : Unit
     {
         base.ReleaseSkill(skill, target);
     }
+
+    public override void Die()
+    {
+        base.Die();
+
+        HideHPInfo();
+
+        // HACK 后期应该加上死亡动画再setactive(false)
+        gameObject.SetActive(false);
+    }
 }

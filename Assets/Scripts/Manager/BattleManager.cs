@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -21,8 +20,32 @@ public class BattleManager : MonoBehaviourSingleton<BattleManager>
     // 当前处于哪个战斗点
     public Battle CurBattle { get; private set; }
     public List<Unit> AllUnits => CurBattle.allUnits;
+    private List<Battle> allBattles;
 
     BattlePanelController BattlePanel => UIManager.Instance.GetPanel(PanelName.BattlePanel) as BattlePanelController;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        EventCenter.Instance.RegisterEvent(EventType.OnSceneSwitchComplete, () =>
+        {
+            allBattles = new List<Battle>();
+
+            GameObject go = GameObject.Find("-----Battles");
+            if (go != null)
+            {
+                for (int i = 0; i < go.transform.childCount; i++)
+                {
+                    allBattles.Add(go.transform.GetChild(i).GetComponent<Battle>());
+                }
+            }
+        });
+
+        EventCenter.Instance.RegisterEvent(EventType.OnPlayerGiveUpBattle, () =>
+        {
+            CurBattle.RefreshUnits();
+        });
+    }
 
     private void Update()
     {
@@ -50,9 +73,10 @@ public class BattleManager : MonoBehaviourSingleton<BattleManager>
         if (PlayerManager.Instance.PlayerUnit.IsDead)
         {
             Debug.Log("玩家死亡");
-            QuitBattle();
+            DefeatThenQuitBattle();
             return;
         }
+
         bool isEnemiesAllDead = true;
         foreach (var unit in AllUnits)
         {
@@ -64,7 +88,7 @@ public class BattleManager : MonoBehaviourSingleton<BattleManager>
         if (isEnemiesAllDead)
         {
             Debug.Log("玩家胜利");
-            QuitBattle();
+            VictoryThenQuitBattle();
             return;
         }
 
@@ -94,21 +118,27 @@ public class BattleManager : MonoBehaviourSingleton<BattleManager>
     }
 
 
-    public void QuitBattle()
+    // 战斗失败，退出战斗
+    private void DefeatThenQuitBattle()
     {
         if (!isBattling) return;
         isBattling = false;
 
-        CurBattle.QuitBattle();
+        CurBattle.DefeatThenQuitBattle();
         CameraManager.Instance.SwitchToPlayerFollowCamera();
         PlayerManager.Instance.UnlockMove();
         UIManager.Instance.ClosePanel(PanelName.BattlePanel);
     }
 
-    #region 事件集
-    public void OnBattleStart()
+    // 战斗胜利，退出战斗
+    private void VictoryThenQuitBattle()
     {
+        if (!isBattling) return;
+        isBattling = false;
 
+        CurBattle.VictoryThenQuitBattle();
+        CameraManager.Instance.SwitchToPlayerFollowCamera();
+        PlayerManager.Instance.UnlockMove();
+        UIManager.Instance.ClosePanel(PanelName.BattlePanel);
     }
-    #endregion
 }

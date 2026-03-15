@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public enum SpriteType
 {
@@ -33,13 +34,16 @@ public class ResourcesLoader : Singleton<ResourcesLoader>
     private Dictionary<string, GameObject> panelDic = new Dictionary<string, GameObject>();
     private static readonly string panelPath = "Prefabs/Panels/";
 
-
     // 音效
     private static readonly string audioPath = "Audios/";
 
     // Sprite
     private Dictionary<string, Sprite> spriteDic = new Dictionary<string, Sprite>();
     private static readonly string spritePath = "Sprites/";
+
+    // 剧情
+    private static readonly string plotPath = "Plots/";
+
 
     private ResourcesLoader() { }
 
@@ -101,5 +105,10 @@ public class ResourcesLoader : Singleton<ResourcesLoader>
         Sprite newSprite = Resources.LoadAll<Sprite>(spritePath + spriteType).Where(x => x.name == spriteName).ToArray()[0];
         spriteDic.Add(spriteName, newSprite);
         return newSprite;
+    }
+
+    public PlayableAsset LoadPlot(PlotName plotName)
+    {
+        return Resources.LoadAll<PlayableAsset>(plotPath + plotName).Where(x => x.name == plotName.ToString()).ToArray()[0];
     }
 }

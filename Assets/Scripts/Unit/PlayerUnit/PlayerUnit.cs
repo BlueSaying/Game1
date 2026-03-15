@@ -55,4 +55,12 @@ public class PlayerUnit : Unit
 
         EventCenter.Instance.NotifyEvent(EventType.OnPlayerInfoChanged);
     }
+
+    public override void Die()
+    {
+        base.Die();
+
+        // 玩家死亡逻辑
+
+    }
 }

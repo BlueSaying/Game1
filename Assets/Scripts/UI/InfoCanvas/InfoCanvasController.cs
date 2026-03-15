@@ -24,8 +24,9 @@ public class InfoCanvasController : MonoBehaviour
     public void ShowDamageNum(int damage)
     {
         damageNum.gameObject.SetActive(true);
-        damageNum.position = new Vector3(0, 250, 0);
-        damageNum.DOMoveY(300.0f, 0.5f).OnComplete(() =>
+        damageNum.GetComponent<TMP_Text>().text = damage.ToString();
+        damageNum.localPosition = new Vector3(0, 250, 0);
+        damageNum.DOLocalMoveY(300.0f, 0.5f).OnComplete(() =>
         {
             damageNum.gameObject.SetActive(false);
         });

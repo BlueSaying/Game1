@@ -13,6 +13,11 @@ public enum EventType
     /// </summary>
     OnSceneSwitchComplete,
 
+    /// <summary>
+    /// 当玩家放弃战斗
+    /// </summary>
+    OnPlayerGiveUpBattle,
+
     // 以上为永久事件
     PermanentDividingLine,
     // 以下为非永久事件
@@ -46,6 +51,8 @@ public enum EventType
     /// 更新战斗界面
     /// </summary>
     UpdateBattlePanel,
+
+    
 }
 
 public class EventCenter : Singleton<EventCenter>
