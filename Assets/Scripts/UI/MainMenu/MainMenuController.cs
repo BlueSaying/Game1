@@ -17,7 +17,7 @@
     private void OnNewGameButtonClicked()
     {
         SceneLoader.Instance.OnSceneStartChange += () => { UIManager.Instance.ClosePanel(this.name); };
-        SceneLoader.Instance.LoadScene(SceneName.Scene1);
+        SceneLoader.Instance.LoadScene(SceneName.Forest);
     }
 
     private void OnLoadButtonClicked()

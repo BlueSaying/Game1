@@ -126,7 +126,7 @@ public class BattleManager : MonoBehaviourSingleton<BattleManager>
 
         CurBattle.DefeatThenQuitBattle();
         CameraManager.Instance.SwitchToPlayerFollowCamera();
-        PlayerManager.Instance.UnlockMove();
+        PlayerManager.Instance.UnFreezePlayerMove();
         UIManager.Instance.ClosePanel(PanelName.BattlePanel);
     }
 
@@ -138,7 +138,7 @@ public class BattleManager : MonoBehaviourSingleton<BattleManager>
 
         CurBattle.VictoryThenQuitBattle();
         CameraManager.Instance.SwitchToPlayerFollowCamera();
-        PlayerManager.Instance.UnlockMove();
+        PlayerManager.Instance.UnFreezePlayerMove();
         UIManager.Instance.ClosePanel(PanelName.BattlePanel);
     }
 }

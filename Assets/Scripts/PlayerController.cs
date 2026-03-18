@@ -25,6 +25,10 @@ public class PlayerController : MonoBehaviour
 
         canMove = true;
         canMoveForward = true;
+    }
+
+    void OnEnable()
+    {
         triggeringObj = new HashSet<GameObject>();
     }
 
@@ -57,19 +61,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void LockMove()
+    public void FreezeMove()
     {
         canMove = false;
     }
 
-    public void UnlockMove()
+    public void UnFreezeMove()
     {
         canMove = true;
     }
 
     private void Move()
     {
-        // 键盘移动
+        // Handle Keyboard Input
         float x = 0, z = 0;
         if (Input.GetKey(KeyCode.D)) x += 1;
         if (Input.GetKey(KeyCode.A)) x -= 1;
@@ -77,7 +81,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.S)) z -= 1;
         Vector3 motion = new Vector3(x, 0, z);
 
-        // 鼠标移动
+        // Handle Mouse Input
         if (Camera.main != null && Input.GetMouseButton(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -105,7 +109,4 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(motion * rotSpeed);
         }
     }
-
-    #region 事件集
-    #endregion
 }

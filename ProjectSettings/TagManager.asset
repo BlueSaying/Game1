@@ -17,9 +17,9 @@ TagManager:
   - UI
   - Ground
   - Enemy
-  - 
-  - 
-  - 
+  - Player
+  - Decoration
+  - Battle
   - 
   - 
   - 

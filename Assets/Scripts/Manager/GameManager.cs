@@ -9,5 +9,15 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         
     }
 
-    
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Y))
+        {
+            SceneLoader.Instance.LoadScene(SceneName.Scene1);
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            SceneLoader.Instance.LoadScene(SceneName.Forest);
+        }
+    }
 }

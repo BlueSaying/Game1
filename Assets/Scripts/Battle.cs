@@ -45,7 +45,7 @@ public class Battle : MonoBehaviour
             var c = UIManager.Instance.OpenPanel(PanelName.EnemyInfoBeforeBattlePanel) as EnemyInfoBeforeBattlePanelController;
             c.Init(this);
 
-            PlayerManager.Instance.LockMove();
+            PlayerManager.Instance.FreezePlayerMove();
         });
     }
 
@@ -101,7 +101,7 @@ public class Battle : MonoBehaviour
 
     public void StartBattle()
     {
-        PlayerManager.Instance.SetPlayerTransform(playerPosition);
+        PlayerManager.Instance.SetPlayerPositionAndRotation(playerPosition.position, playerPosition.rotation);
         CameraManager.Instance.SwitchCamera(battleCamera);
 
         // 开始战斗后，将玩家和敌人加入units中

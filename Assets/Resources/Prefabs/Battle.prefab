@@ -141,7 +141,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7998925771208035298}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemies
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1687,7 +1687,7 @@ GameObject:
   - component: {fileID: 4019182146674535271}
   - component: {fileID: 8313995344094916605}
   - component: {fileID: 4812473830060308446}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Battle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1787,9 +1787,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyFocusCamera: {fileID: 1817886579206953551}
   battleCamera: {fileID: 9211714051574257492}
-  playerPositioning: {fileID: 5969068760798440768}
+  playerPosition: {fileID: 0}
   enemies: {fileID: 7998925771208035298}
   allUnits: []
+  openTime: 0
 --- !u!1 &8582194555269308794
 GameObject:
   m_ObjectHideFlags: 0

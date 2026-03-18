@@ -34,7 +34,7 @@ public class EnemyInfoBeforeBattlePanelController : UIController
     public void OnQuitBattleButtonClicked()
     {
         CameraManager.Instance.SwitchToPlayerFollowCamera();
-        PlayerManager.Instance.UnlockMove();
+        PlayerManager.Instance.UnFreezePlayerMove();
 
         UIManager.Instance.ClosePanel(this.name);
     }

@@ -3,29 +3,32 @@ using UnityEditor.SceneManagement;
 
 public class QuickSwitchScene
 {
-    private const string BootstrapPath = "Assets/Scenes/Bootstrap.unity";
-    private const string MainMenuPath = "Assets/Scenes/MainMenu.unity";
-    private const string Scene1Path = "Assets/Scenes/Scene1.unity";
-
     // 快捷键 Alt + 1
     [MenuItem("OpenScenes/Bootstrap &1")]
     public static void OpenBootstrap()
     {
-        SwitchToScene(BootstrapPath);
+        SwitchToScene("Assets/Scenes/Bootstrap.unity");
     }
 
     // 快捷键 Alt + 2
     [MenuItem("OpenScenes/MainMenu &2")]
     public static void OpenMainMenu()
     {
-        SwitchToScene(MainMenuPath);
+        SwitchToScene("Assets/Scenes/MainMenu.unity");
     }
 
     // 快捷键 Alt + 3
     [MenuItem("OpenScenes/Scene1 &3")]
     public static void OpenScene1()
     {
-        SwitchToScene(Scene1Path);
+        SwitchToScene("Assets/Scenes/Scene1.unity");
+    }
+
+    // 快捷键 Alt + 4
+    [MenuItem("OpenScenes/Forest &4")]
+    public static void OpenForest()
+    {
+        SwitchToScene("Assets/Scenes/Forest.unity");
     }
 
     private static void SwitchToScene(string scenePath)

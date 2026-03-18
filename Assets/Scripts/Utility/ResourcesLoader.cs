@@ -18,13 +18,13 @@ public class ResourcesLoader : Singleton<ResourcesLoader>
     private Dictionary<string, GameObject> weaponDic = new Dictionary<string, GameObject>();
     private static readonly string weaponPath = "Prefabs/Weapons/";
 
-    // 玩家
-    private Dictionary<string, GameObject> playerDic = new Dictionary<string, GameObject>();
-    private static readonly string playerPath = "Prefabs/Player";
+    // 角色
+    private Dictionary<string, GameObject> characterDic = new Dictionary<string, GameObject>();
+    private static readonly string characterPath = "Prefabs/Character";
 
     // 敌人
-    private Dictionary<string, GameObject> enemyDic = new Dictionary<string, GameObject>();
-    private static readonly string enemyPath = "Prefabs/Enemies/";
+    //private Dictionary<string, GameObject> enemyDic = new Dictionary<string, GameObject>();
+    //private static readonly string enemyPath = "Prefabs/Enemies/";
 
     // 特效
     private Dictionary<string, GameObject> effectDic = new Dictionary<string, GameObject>();
@@ -57,23 +57,23 @@ public class ResourcesLoader : Singleton<ResourcesLoader>
         return newWeapon;
     }
 
-    public GameObject LoadPlayer(string playerName)
+    public GameObject LoadCharacter(string characterName)
     {
-        if (playerDic.ContainsKey(playerName)) return playerDic[playerName];
+        if (characterDic.ContainsKey(characterName)) return characterDic[characterName];
 
-        GameObject newPlayer = Resources.LoadAll<GameObject>(playerPath).Where(x => x.name == playerName).ToArray()[0];
-        playerDic.Add(playerName, newPlayer);
-        return newPlayer;
+        GameObject newCharacter = Resources.LoadAll<GameObject>(characterPath).Where(x => x.name == characterName).ToArray()[0];
+        characterDic.Add(characterName, newCharacter);
+        return newCharacter;
     }
 
-    public GameObject LoadEnemy(string enemyName)
-    {
-        if (enemyDic.ContainsKey(enemyName)) return enemyDic[enemyName];
-
-        GameObject newEnemy = Resources.LoadAll<GameObject>(enemyPath).Where(x => x.name == enemyName).ToArray()[0];
-        enemyDic.Add(enemyName, newEnemy);
-        return newEnemy;
-    }
+    //public GameObject LoadEnemy(string enemyName)
+    //{
+    //    if (enemyDic.ContainsKey(enemyName)) return enemyDic[enemyName];
+    //
+    //    GameObject newEnemy = Resources.LoadAll<GameObject>(enemyPath).Where(x => x.name == enemyName).ToArray()[0];
+    //    enemyDic.Add(enemyName, newEnemy);
+    //    return newEnemy;
+    //}
 
     public GameObject LoadEffect(string effectName)
     {

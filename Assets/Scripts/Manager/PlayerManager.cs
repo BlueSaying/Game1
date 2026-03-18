@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviourSingleton<PlayerManager>
 {
@@ -7,34 +8,59 @@ public class PlayerManager : MonoBehaviourSingleton<PlayerManager>
     public PlayerUnit PlayerUnit { get; private set; }
     public PlayerModel PlayerModel => PlayerUnit.Model;
 
+    public Transform Player { get; private set; }
+
     private void Start()
     {
-        EventCenter.Instance.RegisterEvent(EventType.OnSceneSwitchComplete, FindPlayer);
+        Player = transform.Find("Player");
+        PlayerController = Player.GetComponent<PlayerController>();
+        PlayerUnit = Player.GetComponent<PlayerUnit>();
 
+        // 保险措施
+        DisablePlayer();
+
+        EventCenter.Instance.RegisterEvent(EventType.OnSceneSwitchStart, DisablePlayer);
+        EventCenter.Instance.RegisterEvent(EventType.OnSceneSwitchComplete, () =>
+        {
+            // 如果当前没有加载到主菜单
+            if (SceneManager.GetActiveScene().name != SceneName.MainMenu.ToString())
+            {
+                DisablePlayer();
+                ReSetPlayerPositionAndRotation();
+                EnablePlayer();
+            }
+        });
     }
 
-    public void SetPlayerTransform(Transform transform)
+    public void ReSetPlayerPositionAndRotation()
     {
-        PlayerController.transform.position = transform.position;
-        PlayerController.transform.rotation = transform.rotation;
-        PlayerController.transform.localScale = transform.localScale;
+        
+        SetPlayerPositionAndRotation(Vector3.zero, Quaternion.identity);
     }
 
-    public void LockMove()
+    public void SetPlayerPositionAndRotation(Vector3 pos, Quaternion rot)
     {
-        PlayerController.LockMove();
+        Player.position = pos;
+        Player.rotation = rot;
     }
 
-    public void UnlockMove()
+    public void FreezePlayerMove()
     {
-        PlayerController.UnlockMove();
+        PlayerController?.FreezeMove();
     }
 
-    #region 事件集
-    public void FindPlayer()
+    public void UnFreezePlayerMove()
     {
-        PlayerController = GameObject.Find("Player")?.GetComponent<PlayerController>();
-        PlayerUnit = GameObject.Find("Player")?.GetComponent<PlayerUnit>();
+        PlayerController?.UnFreezeMove();
     }
-    #endregion
+
+    public void DisablePlayer()
+    {
+        Player.gameObject.SetActive(false);
+    }
+
+    public void EnablePlayer()
+    {
+        Player.gameObject.SetActive(true);
+    }
 }

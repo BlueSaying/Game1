@@ -18,6 +18,8 @@ public enum SceneName
     MainMenu,
 
     Scene1,
+
+    Forest,
 }
 
 public class SceneLoader : MonoBehaviourSingleton<SceneLoader>
@@ -88,11 +90,5 @@ public class SceneLoader : MonoBehaviourSingleton<SceneLoader>
                 .SetEase(Ease.InQuad);
             };
         });
-    }
-
-    private void Update()
-    {
-
-
     }
 }

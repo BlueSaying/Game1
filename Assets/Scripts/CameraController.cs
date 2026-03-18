@@ -18,6 +18,6 @@ public class CameraController : MonoBehaviour
         Vector3 yBase = (transform.up + transform.forward).normalized;
         Vector3 moveDir = x * xBase + y * yBase;
 
-        transform.Translate(moveDir * moveSpeed * Time.deltaTime,Space.World);
+        transform.Translate(moveDir * moveSpeed * Time.deltaTime, Space.World);
     }
 }

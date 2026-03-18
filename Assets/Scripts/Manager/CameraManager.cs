@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class CameraManager : Singleton<CameraManager>
 {
-    private CinemachineVirtualCamera playerFollowCamera;
     private CinemachineVirtualCamera curVcam;
+    private CinemachineVirtualCamera playerFollowCamera;
 
     private CameraManager()
     {
-        SwitchToPlayerFollowCamera();
+        playerFollowCamera = PlayerManager.Instance.transform.Find("PlayerFollowCamera").GetComponent<CinemachineVirtualCamera>();
 
         EventCenter.Instance.RegisterEvent(EventType.OnSceneSwitchComplete, SwitchToPlayerFollowCamera);
     }
@@ -23,8 +23,6 @@ public class CameraManager : Singleton<CameraManager>
 
     public void SwitchToPlayerFollowCamera()
     {
-        playerFollowCamera = GameObject.Find("PlayerFollowCamera")?.GetComponent<CinemachineVirtualCamera>();
-
         if (curVcam != null) curVcam.Priority = 0;
         if (playerFollowCamera != null) playerFollowCamera.Priority = 1;
 

@@ -77,7 +77,7 @@ public class BattlePanelController : UIController
     private void OnGiveUpButtonClicked()
     {
         CameraManager.Instance.SwitchToPlayerFollowCamera();
-        PlayerManager.Instance.UnlockMove();
+        PlayerManager.Instance.UnFreezePlayerMove();
 
         UIManager.Instance.ClosePanel(this.name);
 
